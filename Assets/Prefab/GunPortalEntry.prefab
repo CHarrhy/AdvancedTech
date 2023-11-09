@@ -118,5 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f74a48c0374594dbbd9c4490abff8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3384720275412076036, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
-  destination: {fileID: 4537186439412086177, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+  exitPortal: {fileID: 4537186439412086177, guid: b210a93c9a678364b8302a8b568210b3, type: 3}

@@ -1,8 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    public GameObject entryPortalPrefab;
+    public GameObject exitPortalPrefab;
+    public Transform entryPortalSpawnPoint;
+    public Transform exitPortalSpawnPoint;
+
     public float walkingSpeed = 5.0f;
     public float sprintSpeed = 10.0f;
     public float crouchSpeed = 2.0f;
@@ -16,7 +22,11 @@ public class PlayerController : MonoBehaviour
     private float upDownRange = 60.0f;
     private bool isSprinting = false;
     private bool isCrouching = false;
+    private bool canShootPortal = true;
     private Vector3 playerVelocity;
+
+    private Portal entryPortal;
+    private Portal exitPortal;
 
     void Start()
     {
@@ -25,6 +35,12 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main;
+
+        entryPortal = Instantiate(entryPortalPrefab, entryPortalSpawnPoint.position, Quaternion.identity).GetComponent<Portal>();
+        exitPortal = Instantiate(exitPortalPrefab, exitPortalSpawnPoint.position, Quaternion.identity).GetComponent<Portal>();
+
+        entryPortal.SetExitPortal(exitPortalSpawnPoint);
+        exitPortal.SetExitPortal(entryPortalSpawnPoint);
     }
 
     void Update()
@@ -33,6 +49,7 @@ public class PlayerController : MonoBehaviour
         HandleMouseLook();
         HandleSprinting();
         HandleCrouching();
+        HandlePortalShooting();
     }
 
     void HandleMovement()
@@ -103,5 +120,59 @@ public class PlayerController : MonoBehaviour
                 characterController.height *= 2;
             }
         }
+    }
+
+    void HandlePortalShooting()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canShootPortal)
+        {
+            ShootPortal(KeyCode.E);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && canShootPortal)
+        {
+            ShootPortal(KeyCode.R);
+        }
+    }
+
+    void ShootPortal(KeyCode key)
+    {
+        Vector3 rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.CompareTag("Wall"))
+            {
+                CreatePortal(key, hit.point, hit.normal);
+                Debug.Log("Portal shot!");
+            }
+        }
+    }
+
+    void CreatePortal(KeyCode key, Vector3 position, Vector3 normal)
+    {
+        Portal portalToInstantiate = (key == KeyCode.E) ? entryPortal : exitPortal;
+        GameObject portal = Instantiate(portalToInstantiate.gameObject, position, Quaternion.LookRotation(normal));
+        Portal portalScript = portal.GetComponent<Portal>();
+
+        if (key == KeyCode.E)
+        {
+            entryPortal.SetExitPortal(portalScript.transform);
+        }
+        else if (key == KeyCode.R)
+        {
+            exitPortal.SetExitPortal(portalScript.transform);
+        }
+
+        StartCoroutine(PortalCooldown());
+        Debug.Log("Portal created!");
+    }
+
+    IEnumerator PortalCooldown()
+    {
+        canShootPortal = false;
+        yield return new WaitForSeconds(2.0f); // Adjust the cooldown duration as needed
+        canShootPortal = true;
     }
 }

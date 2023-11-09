@@ -1,57 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    private void Start()
-    {
-        PortalManager.instance.RegisterDestinationPortal(this);
-    }
+    public Transform exitPortal;
+    private bool isPlayerInPortal = false;
 
-    private void OnTriggerEnter(Collider other)
+    private Transform playerToTeleport; // Added variable to store the player's transform
+
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Assuming the player has a "Player" tag
+        if (other.CompareTag("Player"))
         {
-            TeleportPlayer(other.transform);
+            isPlayerInPortal = true;
+            playerToTeleport = other.transform; // Store the player's transform
         }
     }
 
-    private void TeleportPlayer(Transform player)
+    void OnTriggerExit(Collider other)
     {
-        Portal destinationPortal = FindActiveDestinationPortal(player);
-
-        if (destinationPortal != null)
+        if (other.CompareTag("Player"))
         {
-            player.position = destinationPortal.transform.position + destinationPortal.transform.forward * 2f; // Move player a bit forward from the portal
-            player.rotation = destinationPortal.transform.rotation;
-        }
-        else
-        {
-            Debug.LogError("No active destination portal found!");
+            isPlayerInPortal = false;
+            playerToTeleport = null; // Reset the stored player's transform
         }
     }
 
-    private Portal FindActiveDestinationPortal(Transform player)
+    void Update()
     {
-        Ray ray = new Ray(player.GetComponentInChildren<Camera>().transform.position, player.GetComponentInChildren<Camera>().transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (isPlayerInPortal && Input.GetKeyDown(KeyCode.F) && playerToTeleport != null)
         {
-            if (hit.collider.CompareTag("PortalDestination"))
-            {
-                return hit.collider.GetComponent<Portal>();
-            }
+            Teleport(playerToTeleport); // Pass the stored player's transform to Teleport
         }
-
-        return null; // Return null if no active destination portal is found in the player's view.
     }
 
-    public bool IsActiveDestination { get; private set; }
-
-    public void SetActiveDestination(bool isActive)
+    void Teleport(Transform player)
     {
-        IsActiveDestination = isActive;
+        Debug.Log("Teleporting!");
+        player.position = exitPortal.position;
+    }
+
+    public void SetExitPortal(Transform exit)
+    {
+        exitPortal = exit;
     }
 }
