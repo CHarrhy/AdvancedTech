@@ -35,16 +35,11 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main;
-
-        entryPortal = Instantiate(entryPortalPrefab, entryPortalSpawnPoint.position, Quaternion.identity).GetComponent<Portal>();
-        exitPortal = Instantiate(exitPortalPrefab, exitPortalSpawnPoint.position, Quaternion.identity).GetComponent<Portal>();
-
-        entryPortal.SetExitPortal(exitPortalSpawnPoint);
-        exitPortal.SetExitPortal(entryPortalSpawnPoint);
     }
 
     void Update()
     {
+        Debug.Log("Player Position: " + transform.position); // Add this debug log
         HandleMovement();
         HandleMouseLook();
         HandleSprinting();
@@ -152,21 +147,34 @@ public class PlayerController : MonoBehaviour
 
     void CreatePortal(KeyCode key, Vector3 position, Vector3 normal)
     {
-        Portal portalToInstantiate = (key == KeyCode.E) ? entryPortal : exitPortal;
-        GameObject portal = Instantiate(portalToInstantiate.gameObject, position, Quaternion.LookRotation(normal));
-        Portal portalScript = portal.GetComponent<Portal>();
+        Portal portalToInstantiate = (key == KeyCode.E) ? entryPortalPrefab.GetComponent<Portal>() : exitPortalPrefab.GetComponent<Portal>();
+
+        // Destroy the existing portal of the same type
+        if (key == KeyCode.E && entryPortal != null)
+        {
+            Destroy(entryPortal.gameObject);
+        }
+        else if (key == KeyCode.R && exitPortal != null)
+        {
+            Destroy(exitPortal.gameObject);
+        }
+
+        GameObject portalObject = Instantiate(portalToInstantiate.gameObject, position, Quaternion.LookRotation(normal));
+        Portal portalScript = portalObject.GetComponent<Portal>();
 
         if (key == KeyCode.E)
         {
-            entryPortal.SetExitPortal(portalScript.transform);
+            entryPortal = portalScript;
+            exitPortal.SetExitPortal(portalScript.transform);
         }
         else if (key == KeyCode.R)
         {
-            exitPortal.SetExitPortal(portalScript.transform);
+            exitPortal = portalScript;
+            entryPortal.SetExitPortal(portalScript.transform);
         }
 
         StartCoroutine(PortalCooldown());
-        Debug.Log("Portal created!");
+        Debug.Log("Portal created! Exit Portal Position: " + portalScript.exitPortal.position);
     }
 
     IEnumerator PortalCooldown()
