@@ -23,7 +23,7 @@ public class Portal : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInPortal)
+        if (isPlayerInPortal && exitPortal != null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             Teleport(player.transform);
