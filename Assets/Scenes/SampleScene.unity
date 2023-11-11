@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!20 &86571620 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 8039299565220283742, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
-  m_PrefabInstance: {fileID: 9165041826884094938}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &271098434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,25 +1035,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1608315882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1512503601 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3384720275412076036, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
-  m_PrefabInstance: {fileID: 9165041826884094938}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1512503607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512503601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afc2495db7a02b144b615bfa133d5fab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portalPrefab: {fileID: 1338551684137682174, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
-  playerCamera: {fileID: 86571620}
 --- !u!1 &1526075478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,13 +1949,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: character
       objectReference: {fileID: 0}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalPrefab
+      value: 
+      objectReference: {fileID: 1338551684137682174, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalPrefab1
+      value: 
+      objectReference: {fileID: 1338551684137682174, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalPrefab2
+      value: 
+      objectReference: {fileID: 6807879755304845447, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalPrefabA
+      value: 
+      objectReference: {fileID: 1338551684137682174, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalPrefabB
+      value: 
+      objectReference: {fileID: 6807879755304845447, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: exitPortalPrefab
+      value: 
+      objectReference: {fileID: 6807879755304845447, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: portalSpawnPoint
+      value: 
+      objectReference: {fileID: 4537186439412086177, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: entryPortalPrefab
+      value: 
+      objectReference: {fileID: 1338551684137682174, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: exitPortalSpawnPoint
+      value: 
+      objectReference: {fileID: 4537186439412086177, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+    - target: {fileID: 3803577456053029067, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
+      propertyPath: entryPortalSpawnPoint
+      value: 
+      objectReference: {fileID: 744410055693143821, guid: 27b2e43ec93612242b328ebb34b1147b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3384720275412076036, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1512503607}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d10bbf8f5153ac847b1def42ce8bdc9b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

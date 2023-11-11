@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7000513091352959422}
   - component: {fileID: 6341937859050492683}
   - component: {fileID: 7724728080758834930}
-  - component: {fileID: 6406703684619729171}
+  - component: {fileID: 5935627608977000265}
   m_Layer: 0
   m_Name: GunPortalEntry
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6406703684619729171
+--- !u!114 &5935627608977000265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f74a48c0374594dbbd9c4490abff8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitPortal: {fileID: 4537186439412086177, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+  otherPortal: {fileID: 0}
