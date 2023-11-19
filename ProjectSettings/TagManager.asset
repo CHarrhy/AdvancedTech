@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - PortalDestination
   - Portal
+  - OrangePortal
+  - BluePortal
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Enemy
   - Water
   - UI
-  - 
+  - Portals
   - 
   - 
   - 

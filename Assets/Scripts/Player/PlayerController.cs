@@ -1,6 +1,5 @@
-using System.Collections;
+// PlayerController.cs
 using UnityEngine;
-using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -20,14 +19,6 @@ public class PlayerController : MonoBehaviour
     private bool isCrouching = false;
     private Vector3 playerVelocity;
 
-    public GameObject portalPrefabA;
-    public GameObject portalPrefabB;
-
-    private GameObject portalA;
-    private GameObject portalB;
-
-    private float portalOffset = 0.5f; // Adjust this value as needed
-
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -43,68 +34,6 @@ public class PlayerController : MonoBehaviour
         HandleMouseLook();
         HandleSprinting();
         HandleCrouching();
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SpawnPortal(portalPrefabA, ref portalA);
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            SpawnPortal(portalPrefabB, ref portalB);
-        }
-
-        CheckTeleport(portalA, portalB);
-        CheckTeleport(portalB, portalA);
-    }
-
-    private void SpawnPortal(GameObject portalPrefab, ref GameObject portal)
-    {
-        // Raycast to find the wall
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Wall"))
-        {
-            // Destroy the existing portal of the same type
-            if (portal != null)
-            {
-                Destroy(portal);
-            }
-
-            // Calculate the spawn position slightly off the wall
-            Vector3 spawnPosition = hit.point + hit.normal * portalOffset;
-
-            // Spawn the new portal
-            portal = Instantiate(portalPrefab, spawnPosition, Quaternion.LookRotation(hit.normal));
-        }
-    }
-
-    private void CheckTeleport(GameObject fromPortal, GameObject toPortal)
-    {
-        if (fromPortal != null && toPortal != null)
-        {
-            Collider fromCollider = fromPortal.GetComponent<Collider>();
-            Collider toCollider = toPortal.GetComponent<Collider>();
-
-            if (fromCollider.bounds.Contains(transform.position))
-            {
-                Teleport(toPortal, fromPortal);
-            }
-        }
-    }
-
-    private void Teleport(GameObject toPortal, GameObject fromPortal)
-    {
-        // Teleport the player to the destination portal based on the relative position and rotation difference
-        Vector3 portalToPlayer = transform.position - fromPortal.transform.position;
-        float rotationDifference = Quaternion.Angle(fromPortal.transform.rotation, toPortal.transform.rotation);
-
-        // Rotate the relative position by the rotation difference and apply to the destination portal's position
-        Vector3 rotatedPositionOffset = Quaternion.Euler(0f, rotationDifference, 0f) * portalToPlayer;
-        transform.position = toPortal.transform.position + rotatedPositionOffset;
-
-        // Rotate the player to match the destination portal's forward direction
-        transform.forward = toPortal.transform.forward;
     }
 
     void HandleMovement()
