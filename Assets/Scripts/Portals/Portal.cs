@@ -2,42 +2,52 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public Transform exitPortal;
-    private bool isPlayerInPortal = false;
+    public GameObject otherPortalPrefab;  // Reference to the other portal prefab
 
-    void OnTriggerEnter(Collider other)
+    private GameObject otherPortal;  // Reference to the other portal instance
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInPortal = true;
+            Teleport(other.gameObject);
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void Teleport(GameObject player)
     {
-        if (other.CompareTag("Player"))
+        // Check if the other portal is set
+        if (otherPortal != null)
         {
-            isPlayerInPortal = false;
+            // Calculate the teleportation destination based on the other portal's position and rotation
+            Vector3 offsetFromPortal = Quaternion.Euler(0, otherPortal.transform.eulerAngles.y - transform.eulerAngles.y, 0) * (player.transform.position - transform.position);
+            player.transform.position = otherPortal.transform.position + offsetFromPortal;
         }
-    }
-
-    void Update()
-    {
-        if (isPlayerInPortal)
+        else
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Teleport(player.transform);
+            Debug.LogError("Other portal reference is null. Ensure portals are paired correctly.");
         }
     }
 
-    void Teleport(Transform player)
+    public void CreateOtherPortal(Vector3 position, Quaternion rotation)
     {
-        Debug.Log("Teleporting!");
-        player.position = exitPortal.position;
-    }
+        if (otherPortal != null)
+        {
+            Destroy(otherPortal);
+        }
 
-    public void SetExitPortal(Transform exit)
-    {
-        exitPortal = exit;
+        // Check if the otherPortalPrefab is assigned
+        if (otherPortalPrefab != null)
+        {
+            // Instantiate the other portal prefab at the specified position and rotation
+            otherPortal = Instantiate(otherPortalPrefab, position, rotation);
+
+            // Set the reference to this portal on the other portal
+            otherPortal.GetComponent<Portal>().otherPortal = gameObject;
+        }
+        else
+        {
+            Debug.LogError("otherPortalPrefab is not assigned in the Portal script.");
+        }
     }
 }
