@@ -1,4 +1,3 @@
-// PlayerController.cs
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -19,6 +18,14 @@ public class PlayerController : MonoBehaviour
     private bool isCrouching = false;
     private Vector3 playerVelocity;
 
+    public GameObject portalPrefabA;
+    public GameObject portalPrefabB;
+
+    private GameObject portalA;
+    private GameObject portalB;
+
+    private float portalOffset = 0.1f; // Adjust this value as needed
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,7 +41,53 @@ public class PlayerController : MonoBehaviour
         HandleMouseLook();
         HandleSprinting();
         HandleCrouching();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SpawnPortal(portalPrefabA, ref portalA);
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            SpawnPortal(portalPrefabB, ref portalB);
+        }
     }
+
+    private void SpawnPortal(GameObject portalPrefab, ref GameObject portal)
+    {
+        // Raycast to find the wall
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Wall"))
+        {
+            // Destroy the existing portal of the same type
+            if (portal != null)
+            {
+                Destroy(portal);
+            }
+
+            // Calculate the spawn position slightly off the wall
+            Vector3 spawnPosition = hit.point + hit.normal * portalOffset;
+
+            // Calculate the rotation to align with the wall
+            Quaternion spawnRotation = Quaternion.LookRotation(hit.normal, Vector3.up);
+
+            // Spawn the new portal
+            portal = Instantiate(portalPrefab, spawnPosition, spawnRotation);
+
+            // Get the Portal component and set the otherPortal reference for bidirectional teleportation
+            Portal portalComponent = portal.GetComponent<Portal>();
+            if (portalComponent != null)
+            {
+                portalComponent.otherPortal = (portal == portalA) ? portalB.GetComponent<Portal>() : portalA.GetComponent<Portal>();
+            }
+            else
+            {
+                Debug.LogError("Portal component not found on the spawned portal.");
+            }
+        }
+    }
+
 
     void HandleMovement()
     {

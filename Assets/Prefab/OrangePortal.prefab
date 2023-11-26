@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f74a48c0374594dbbd9c4490abff8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherPortalPrefab: {fileID: 6807879755304845447, guid: b210a93c9a678364b8302a8b568210b3, type: 3}
+  otherPortal: {fileID: 2897573216569968303, guid: b210a93c9a678364b8302a8b568210b3, type: 3}

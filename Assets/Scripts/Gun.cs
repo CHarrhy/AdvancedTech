@@ -40,7 +40,7 @@ public class Gun : MonoBehaviour
             Shoot();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             StartCoroutine(Reload());
         }
