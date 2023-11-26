@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Player Position: " + transform.position); // Add this debug log
         HandleMovement();
         HandleMouseLook();
         HandleSprinting();

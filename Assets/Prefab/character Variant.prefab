@@ -164,9 +164,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b10cdae6dadd8b24aa1dc12814b33ba6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4350118785142395244}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b10cdae6dadd8b24aa1dc12814b33ba6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6638849330073002725}
   m_SourcePrefab: {fileID: 100100000, guid: b10cdae6dadd8b24aa1dc12814b33ba6, type: 3}
 --- !u!4 &2716551854632705214 stripped
 Transform:
@@ -190,6 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815c23439cf90794da8cbc5ceed8d92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entryPortalPrefab: {fileID: 0}
+  exitPortalPrefab: {fileID: 0}
+  entryPortalSpawnPoint: {fileID: 0}
+  exitPortalSpawnPoint: {fileID: 0}
   walkingSpeed: 5
   sprintSpeed: 10
   crouchSpeed: 2
@@ -245,19 +246,3 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6638849330073002725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384720275412076036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4728bac6a0a99094798ff509301a0045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  respawnPoint: {fileID: 0}
-  healthText: {fileID: 0}
