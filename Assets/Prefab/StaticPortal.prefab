@@ -122,8 +122,9 @@ GameObject:
   - component: {fileID: 6209946739905544019}
   - component: {fileID: 8199611131279100825}
   - component: {fileID: 6160488464166399224}
+  - component: {fileID: -3065984331289699492}
   m_Layer: 0
-  m_Name: Portal
+  m_Name: StaticPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,3 +218,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.26281017, y: 5.8012586, z: 3.1249995}
   m_Center: {x: 0.07461784, y: 3.9959502, z: 0.56249994}
+--- !u!114 &-3065984331289699492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7695000921068366412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fb03ba76db3d0488fdbd88fe8dde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationTransform: {fileID: 0}

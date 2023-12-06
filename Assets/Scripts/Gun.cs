@@ -56,7 +56,10 @@ public class Gun : MonoBehaviour
         // gunAnimator.SetTrigger("Shoot");
 
         // Instantiate and play muzzle flash with user-defined position and rotation offsets
-        Instantiate(muzzleFlashPrefab, transform.position + muzzleFlashPositionOffset, Quaternion.Euler(transform.eulerAngles + muzzleFlashRotationOffset));
+        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, transform.position + muzzleFlashPositionOffset, Quaternion.Euler(transform.eulerAngles + muzzleFlashRotationOffset));
+
+        // Destroy muzzle flash after 1 second
+        Destroy(muzzleFlash, 1f);
 
         currentAmmo--;
         Debug.Log("Ammo: " + currentAmmo);
@@ -83,8 +86,12 @@ public class Gun : MonoBehaviour
         }
 
         // Instantiate and shoot the bullet
-        Instantiate(bulletPrefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+
+        // Destroy the bullet after 2 seconds
+        Destroy(bullet, 2f);
     }
+
 
     IEnumerator Reload()
     {
