@@ -3,14 +3,18 @@ using System.Collections;
 
 public class Gun : MonoBehaviour
 {
-    public float damage = 10f;
+    public float damage = 100f;
     public float range = 100f;
-    public float fireRate = 1f;
+    public float fireRate = 0.1f;
     public int maxAmmo = 5;
     public float reloadTime = 2f;
     public Camera fpsCamera;
-    //public ParticleSystem muzzleFlash;
     public GameObject bulletPrefab; // Reference to the bullet prefab
+    public GameObject muzzleFlashPrefab; // Reference to the muzzle flash prefab
+
+    // Parameters for muzzle flash position and rotation
+    public Vector3 muzzleFlashPositionOffset = Vector3.zero;
+    public Vector3 muzzleFlashRotationOffset = Vector3.zero;
 
     private int currentAmmo;
     private bool isReloading = false;
@@ -48,7 +52,12 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        //muzzleFlash.Play(); // Play muzzle flash particle effect
+        // Play shooting animation (removed for now)
+        // gunAnimator.SetTrigger("Shoot");
+
+        // Instantiate and play muzzle flash with user-defined position and rotation offsets
+        Instantiate(muzzleFlashPrefab, transform.position + muzzleFlashPositionOffset, Quaternion.Euler(transform.eulerAngles + muzzleFlashRotationOffset));
+
         currentAmmo--;
         Debug.Log("Ammo: " + currentAmmo);
         Debug.DrawRay(fpsCamera.transform.position, fpsCamera.transform.forward * range, Color.red, 0.1f);
