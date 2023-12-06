@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour
         {
             SpawnPortal(portalPrefabB, ref portalB);
         }
+
+        // Check for teleportation
+        CheckTeleport(portalA, portalB);
+        CheckTeleport(portalB, portalA);
     }
 
     private void SpawnPortal(GameObject portalPrefab, ref GameObject portal)
@@ -88,6 +92,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void CheckTeleport(GameObject fromPortal, GameObject toPortal)
+    {
+        if (fromPortal != null && toPortal != null)
+        {
+            Collider fromCollider = fromPortal.GetComponent<Collider>();
+            Collider toCollider = toPortal.GetComponent<Collider>();
+
+            if (fromCollider.bounds.Contains(transform.position))
+            {
+                Teleport(toPortal);
+            }
+        }
+    }
+
+    private void Teleport(GameObject toPortal)
+    {
+        // Ensure the characterController is not null
+        if (characterController != null)
+        {
+            // Calculate the position relative to the other portal
+            Vector3 portalToPlayer = transform.position - toPortal.transform.position;
+
+            // Update the characterController's position
+            characterController.enabled = false;
+            transform.position = toPortal.transform.position + portalToPlayer;
+            characterController.enabled = true;
+
+            // Rotate the player to match the other portal's forward direction
+            transform.forward = toPortal.transform.forward;
+
+            Debug.Log("Player teleported successfully.");
+        }
+        else
+        {
+            Debug.LogError("CharacterController is null.");
+        }
+    }
+
+    // ... (Your existing methods)
 
     void HandleMovement()
     {
